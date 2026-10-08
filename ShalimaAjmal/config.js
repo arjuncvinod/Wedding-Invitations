@@ -5,7 +5,7 @@ const SITE_CONFIG = {
 
   occasion: "Nikah",
   
-  venueName: "Malayakkal Garden",
+  venueName: "Maliyakkal Garden",
   venueAddress: "Ottapalam, Kerala",
   venueMapLink: "https://maps.app.goo.gl/76kfvj7vfohMnCpFA",
   
@@ -16,5 +16,5 @@ const SITE_CONFIG = {
   dateTarget: "2026-11-14T00:00:00",
   time: "11:00 AM onwards",
 
-  showThanks: false
+  showThanks: true
 };

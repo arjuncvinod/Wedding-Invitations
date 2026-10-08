@@ -568,7 +568,7 @@
   .thanks-names {
     display: flex; flex-wrap: wrap; justify-content: center;
     gap: 12px 24px;
-    margin-top: 40px;
+    margin: 40px auto 0;
     max-width: 500px;
   }
   .thanks-name {
@@ -584,7 +584,7 @@
   }
   .thanks-name.visible { opacity: 1; transform: translateY(0); }
   .closing-msg {
-    margin-top: 60px;
+    margin: 60px auto 0;
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
     font-size: clamp(1rem, 3vw, 1.3rem);
@@ -596,7 +596,7 @@
     font-family: 'Cinzel', serif;
     font-size: clamp(1rem, 3vw, 1.4rem);
     color: var(--gold);
-    margin-top: 24px;
+    margin: 24px auto 0;
     letter-spacing: .04em;
   }
 
@@ -1077,15 +1077,12 @@
   <div class="section-heading reveal" style="color:var(--cream);transition-delay:.2s;font-size:clamp(1.4rem,4vw,2.2rem)">
     Special Thanks
   </div>
-  <p class="reveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.05rem;max-width:400px;text-align:center;line-height:1.7;margin-top:16px;transition-delay:.35s">
+  <p class="reveal" style="font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--muted);font-size:1.05rem;max-width:400px;margin:16px auto 0;text-align:center;line-height:1.7;transition-delay:.35s">
     This beautiful day would not be possible without the love and efforts of these remarkable people.
   </p>
 
   <div class="thanks-names">
-    <div class="thanks-name" id="tn1">Zoya Ruhi</div>
-    <div class="thanks-name" id="tn2">Hidha Hashim</div>
-    <div class="thanks-name" id="tn3">Zaithoona Hamza</div>
-    <div class="thanks-name" id="tn4">Subair Ahmed</div>
+    <div class="thanks-name" id="tn1" style="border: none; padding: 8px 0; font-size: 1.8rem;">Zayan &amp; Haiza</div>
   </div>
 
   <div class="closing-msg reveal" style="color:var(--muted);transition-delay:.5s">
