@@ -71,7 +71,7 @@ const CONFIG = {
         {
           time: "12:30 pm",
           what: "Wedding Reception",
-          where: "Royal Convention Centre, Kumbanad",
+          where: "Loyal Convention Centre, Kumbanad",
           map: "https://maps.app.goo.gl/WBtSgTKFupCVxvTd9"
         }
       ],
@@ -89,7 +89,7 @@ const CONFIG = {
         {
           time: "3:00 pm",
           what: "Final Toast",
-          where: "Royal Convention Centre, Kumbanad",
+          where: "Loyal Convention Centre, Kumbanad",
           map: "https://maps.app.goo.gl/WBtSgTKFupCVxvTd9"
         }
       ],
