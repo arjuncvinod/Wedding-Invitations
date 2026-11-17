@@ -83,24 +83,47 @@
     else if (petals.length && !reduce) { running = true; last = performance.now(); requestAnimationFrame(frame); }
   });
 
-  /* ---------- Background Music (from reference) ---------- */
+  /* ---------- Background Music (Loop 0:59 to 2:36) ---------- */
   const audio = $("#music"), mBtn = $("#musicBtn");
+  const loopStart = (CONFIG.musicLoopStart != null) ? CONFIG.musicLoopStart : 59;
+  const loopEnd = (CONFIG.musicLoopEnd != null) ? CONFIG.musicLoopEnd : 156;
   let musicReady = false;
+
   if (CONFIG.music && audio) {
     audio.src = CONFIG.music;
-    audio.addEventListener("canplay", () => { musicReady = true; if (mBtn) mBtn.hidden = false; }, { once: true });
-    audio.addEventListener("error", () => { if (mBtn) mBtn.hidden = true; });
+    audio.addEventListener("canplay", () => {
+      musicReady = true;
+    }, { once: true });
+    audio.addEventListener("error", () => {
+      if (mBtn) mBtn.hidden = true;
+    });
+
+    // Precise loop between loopStart (0:59) and loopEnd (2:36)
+    audio.addEventListener("timeupdate", () => {
+      if (audio.currentTime >= loopEnd) {
+        audio.currentTime = loopStart;
+      }
+    });
+
+    audio.addEventListener("ended", () => {
+      audio.currentTime = loopStart;
+      audio.play().catch(() => {});
+    });
   }
 
   function setPlaying(on) {
     if (!mBtn) return;
     mBtn.classList.toggle("playing", on);
-    mBtn.setAttribute("aria-label", on ? "Pause music" : "Play music");
+    mBtn.setAttribute("aria-label", on ? "Mute audio" : "Unmute audio");
+    mBtn.setAttribute("title", on ? "Mute audio" : "Unmute audio");
   }
 
   if (mBtn && audio) {
     mBtn.addEventListener("click", () => {
       if (audio.paused) {
+        if (audio.currentTime < loopStart || audio.currentTime >= loopEnd) {
+          audio.currentTime = loopStart;
+        }
         audio.play().then(() => setPlaying(true)).catch(() => {});
       } else {
         audio.pause();
@@ -134,8 +157,8 @@
     if (opened) return;
     opened = true;
     if (CONFIG.music && audio) {
+      audio.currentTime = loopStart;
       audio.volume = .3;
-      audio.currentTime = 0;
       audio.play().then(() => {
         if (mBtn) mBtn.hidden = false;
         setPlaying(true);
@@ -145,7 +168,13 @@
           audio.volume = v;
           if (v >= .6) clearInterval(f);
         }, 100);
-      }).catch(() => {});
+      }).catch(() => {
+        // In case autoplay is restricted on mobile, reveal the mute/unmute button so user can tap
+        if (mBtn) {
+          mBtn.hidden = false;
+          setPlaying(false);
+        }
+      });
     }
 
     if (cover) cover.classList.add("open");
@@ -243,6 +272,8 @@
       if (isRevealed) return;
       isRevealed = true;
       scratchCanvas.classList.add("revealed");
+      const hint = $("#scratchHint");
+      if (hint) hint.classList.add("revealed");
       startPetals(true);
     }
 
@@ -312,7 +343,7 @@
       const isReception = ev.id === "reception";
       const tagText = isCeremony ? "The Wedding" : (isReception ? "Celebration" : "");
       art.innerHTML = `
-        <div class="bud" aria-hidden="true"><svg viewBox="0 0 100 100"><use href="#${i % 2 ? "bloomBlue" : "rose"}"/></svg></div>
+        <div class="bud" aria-hidden="true"><img src="assets/img/breakpoint.png" alt="" class="bud-img"></div>
         <div class="ev-body">
           <h3 class="ev-title">${esc(ev.title)}${tagText ? `<span class="tag">${tagText}</span>` : ""}</h3>
           ${ev.host ? `<p class="ev-host">${esc(ev.host)}</p>` : ""}
@@ -356,7 +387,7 @@
   function ics(ev) {
     const escI = s => s.replace(/\\/g, "\\\\").replace(/\n/g, "\\n").replace(/,/g, "\\,").replace(/;/g, "\\;");
     const body = ["BEGIN:VCALENDAR", "VERSION:2.0", "PRODID:-//Bibin & Christeena//Invitation//EN", "CALSCALE:GREGORIAN", "BEGIN:VEVENT",
-      `UID:${ev.id}-2026@bibinchristeena`, `DTSTAMP:${utc(new Date().toISOString())}`, `DTSTART:${utc(ev.cal.start)}`, `DTEND:${utc(ev.cal.end)}`,
+      `UID:${ev.id}-2027@bibinchristeena`, `DTSTAMP:${utc(new Date().toISOString())}`, `DTSTART:${utc(ev.cal.start)}`, `DTEND:${utc(ev.cal.end)}`,
       `SUMMARY:${escI(ev.title + " · Bibin & Christeena")}`, `LOCATION:${escI(ev.parts[0].where)}`, `DESCRIPTION:${escI(calText(ev))}`,
       "BEGIN:VALARM", "TRIGGER:-PT3H", "ACTION:DISPLAY", "DESCRIPTION:Reminder", "END:VALARM", "END:VEVENT", "END:VCALENDAR"].join("\r\n");
     const a = document.createElement("a");
@@ -390,11 +421,68 @@
   const vineFill = $("#vineFill");
   function vine() {
     if (!tl || !vineFill) return;
-    const r = tl.getBoundingClientRect();
-    const p = Math.min(1, Math.max(0, (innerHeight * .7 - r.top) / r.height));
+    const vineEl = tl.querySelector(".vine");
+    const firstBud = tl.querySelector(".event .bud");
+    const tlRect = tl.getBoundingClientRect();
+    const vineTop = firstBud ? (firstBud.getBoundingClientRect().bottom - tlRect.top) : 54;
+    if (vineEl) vineEl.style.top = vineTop + "px";
+
+    const vineHeight = Math.max(1, tlRect.height - vineTop - 8);
+    const startY = tlRect.top + vineTop;
+    const p = Math.min(1, Math.max(0, (innerHeight * .7 - startY) / vineHeight));
     vineFill.style.setProperty("--p", p.toFixed(3));
   }
-  addEventListener("scroll", vine, { passive: true }); vine();
+  addEventListener("scroll", vine, { passive: true });
+  addEventListener("resize", vine, { passive: true });
+  vine();
+
+  /* Moments timeline spine scroll progress */
+  const momentsContainer = $(".moments-container");
+  const momentsSpine = $(".moments-spine");
+  const momentsSpineFill = $("#momentsSpineFill");
+  function momentsTrail() {
+    if (!momentsContainer || !momentsSpineFill || !momentsSpine) return;
+    const rows = momentsContainer.querySelectorAll(".moments-row");
+    if (!rows.length) return;
+    const firstLogo = rows[0].querySelector(".moments-logo");
+    const lastLogo = rows[rows.length - 1].querySelector(".moments-logo");
+    if (!firstLogo || !lastLogo) return;
+
+    const cRect = momentsContainer.getBoundingClientRect();
+    const fRect = firstLogo.getBoundingClientRect();
+    const lRect = lastLogo.getBoundingClientRect();
+
+    // The spine connects from the center of the first logo to the center of the last logo
+    const topOffset = (fRect.top + fRect.height / 2) - cRect.top;
+    const bottomOffset = (lRect.top + lRect.height / 2) - cRect.top;
+    const height = Math.max(1, bottomOffset - topOffset);
+
+    momentsSpine.style.top = topOffset + "px";
+    momentsSpine.style.height = height + "px";
+
+    const triggerY = innerHeight * 0.7;
+    const startY = fRect.top + fRect.height / 2;
+    const p = Math.min(1, Math.max(0, (triggerY - startY) / height));
+
+    momentsSpineFill.style.setProperty("--mp", p.toFixed(3));
+
+    rows.forEach(r => {
+      const logo = r.querySelector(".moments-logo");
+      if (logo) {
+        const lY = logo.getBoundingClientRect().top + logo.offsetHeight / 2;
+        logo.classList.toggle("passed", lY <= triggerY);
+      }
+    });
+  }
+  addEventListener("scroll", momentsTrail, { passive: true });
+  addEventListener("resize", momentsTrail, { passive: true });
+  window.addEventListener("load", () => { momentsTrail(); vine(); });
+  document.querySelectorAll("#moments img, #timeline img").forEach(img => {
+    if (!img.complete) {
+      img.addEventListener("load", () => { momentsTrail(); vine(); }, { once: true });
+    }
+  });
+  momentsTrail();
 
   /* ---------- Gallery & Lightbox (from reference) ---------- */
   const grid = $("#galleryGrid");
@@ -530,6 +618,22 @@
       submit.disabled = true;
       submit.textContent = "Sending…";
 
+      // Send to Google Form
+      const gf = CONFIG.guestbook && CONFIG.guestbook.googleForm;
+      if (gf && gf.endpoint) {
+        try {
+          const body = new URLSearchParams();
+          body.append(gf.nameEntry || "entry.1266621477", name);
+          body.append(gf.messageEntry || "entry.381587613", text);
+          fetch(gf.endpoint, {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: body.toString()
+          }).catch(e => console.warn("Google Form submit notice:", e));
+        } catch (e) {}
+      }
+
       const newWish = { name, text, time: "Just now" };
       const list = getStoredWishes();
       list.unshift(newWish);
@@ -547,7 +651,7 @@
 
       renderWishes();
       submit.disabled = false;
-      submit.textContent = "Send Your Wishes";
+      submit.textContent = "Share your wishes";
     });
   }
 

@@ -13,37 +13,39 @@ const CONFIG = {
   },
 
   // Wedding date in ISO format for countdown (IST UTC+05:30)
-  weddingStart: "2026-11-28T10:30:00+05:30",
-  displayDate: "Saturday · 28 November 2026",
+  weddingStart: "2027-01-06T10:30:00+05:30",
+  displayDate: "Wednesday · 6 January 2027",
   displayPlace: "Othera & Kumbanad, Thiruvalla",
 
   // Audio track
-  music: "assets/music.mp3",
+  music: "assets/music.m4a",
+  musicLoopStart: 59,
+  musicLoopEnd: 156,
 
   // Timeline events (PDF Page 3)
   events: [
     {
       id: "meet-greet",
-      date: "2026-11-28",
-      weekday: "Saturday",
+      date: "2027-01-06",
+      weekday: "Wednesday",
       title: "Meet & Greet",
       parts: [
         {
           time: "10:15 am",
           what: "Meet & Greet",
           where: "Church Grounds, Ebenezer Marthoma Church premises, Othera",
-          map: "https://maps.google.com/?q=Ebenezer+Marthoma+Church+Othera+Thiruvalla"
+          map: "https://maps.app.goo.gl/BDc7FmCFvpCj5zTm6"
         }
       ],
       cal: {
-        start: "2026-11-28T10:15:00+05:30",
-        end: "2026-11-28T10:30:00+05:30"
+        start: "2027-01-06T10:15:00+05:30",
+        end: "2027-01-06T10:30:00+05:30"
       }
     },
     {
       id: "ceremony",
-      date: "2026-11-28",
-      weekday: "Saturday",
+      date: "2027-01-06",
+      weekday: "Wednesday",
       highlight: true,
       title: "Wedding Ceremony",
       parts: [
@@ -51,18 +53,18 @@ const CONFIG = {
           time: "10:30 am",
           what: "Wedding Ceremony",
           where: "Ebenezer Marthoma Church, Othera P.O, Thiruvalla",
-          map: "https://maps.google.com/?q=Ebenezer+Marthoma+Church+Othera+Thiruvalla"
+          map: "https://maps.app.goo.gl/BDc7FmCFvpCj5zTm6"
         }
       ],
       cal: {
-        start: "2026-11-28T10:30:00+05:30",
-        end: "2026-11-28T12:00:00+05:30"
+        start: "2027-01-06T10:30:00+05:30",
+        end: "2027-01-06T12:00:00+05:30"
       }
     },
     {
       id: "reception",
-      date: "2026-11-28",
-      weekday: "Saturday",
+      date: "2027-01-06",
+      weekday: "Wednesday",
       highlight: true,
       title: "Wedding Reception",
       parts: [
@@ -70,51 +72,52 @@ const CONFIG = {
           time: "12:30 pm",
           what: "Wedding Reception",
           where: "Royal Convention Centre, Kumbanad",
-          map: "https://maps.google.com/?q=Royal+Convention+Centre+Kumbanad"
+          map: "https://maps.app.goo.gl/WBtSgTKFupCVxvTd9"
         }
       ],
       cal: {
-        start: "2026-11-28T12:30:00+05:30",
-        end: "2026-11-28T15:00:00+05:30"
+        start: "2027-01-06T12:30:00+05:30",
+        end: "2027-01-06T15:00:00+05:30"
       }
     },
     {
       id: "toast",
-      date: "2026-11-28",
-      weekday: "Saturday",
+      date: "2027-01-06",
+      weekday: "Wednesday",
       title: "Final Toast",
       parts: [
         {
           time: "3:00 pm",
           what: "Final Toast",
           where: "Royal Convention Centre, Kumbanad",
-          map: "https://maps.google.com/?q=Royal+Convention+Centre+Kumbanad"
+          map: "https://maps.app.goo.gl/WBtSgTKFupCVxvTd9"
         }
       ],
       cal: {
-        start: "2026-11-28T15:00:00+05:30",
-        end: "2026-11-28T15:30:00+05:30"
+        start: "2027-01-06T15:00:00+05:30",
+        end: "2027-01-06T15:30:00+05:30"
       }
     }
   ],
 
   // Gallery Photos (PDF Page 4)
   photos: [
-    { src: "assets/img/couple-1.jpg", alt: "Bibin & Christeena holding hands", arch: true },
-    { src: "assets/img/couple-2.jpg", alt: "Bibin & Christeena laughing together" },
-    { src: "assets/img/couple-3.jpg", alt: "Bibin & Christeena romantic portrait" },
-    { src: "assets/img/couple-4.jpg", alt: "Bibin & Christeena in the garden" },
-    { src: "assets/img/couple-5.jpg", alt: "Bibin & Christeena golden sunset" },
-    { src: "assets/img/couple-6.jpg", alt: "Bibin & Christeena looking forward together", arch: true },
-    { src: "assets/img/vignette-1.jpg", alt: "The Vow - Sacred wedding rings" },
-    { src: "assets/img/vignette-2.jpg", alt: "The Bond - Hands intertwined" },
-    { src: "assets/img/vignette-3.jpg", alt: "The Grace - Fresh bridal florals" }
+    { src: "assets/img/img-1.jpeg", alt: "Bibin & Christeena", arch: true },
+    { src: "assets/img/img-2.jpeg", alt: "Bibin & Christeena" },
+    { src: "assets/img/img-3.jpeg", alt: "Bibin & Christeena" },
+    { src: "assets/img/img-4.jpeg", alt: "Bibin & Christeena" },
+    { src: "assets/img/img-5.jpeg", alt: "Bibin & Christeena" },
+    { src: "assets/img/img-6.jpeg", alt: "Bibin & Christeena", arch: true }
   ],
 
   // Guest Wishes Storage Settings (PDF Page 5)
   guestbook: {
     storageKey: "bibin_christeena_wishes_v1",
-    apiEndpoint: ""
+    googleForm: {
+      endpoint: "https://docs.google.com/forms/d/e/1FAIpQLSeUwgTw6m4BBdEj_nTMrcHr3ucwYLrxX_l-wLSF5DPWlaEZXw/formResponse",
+      nameEntry: "entry.1266621477",
+      messageEntry: "entry.381587613"
+    }
   },
 
   // Footer Closing (PDF Page 5)
