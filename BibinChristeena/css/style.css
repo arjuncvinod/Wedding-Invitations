@@ -145,9 +145,9 @@ h2 em{font-family:var(--f-script);font-style:normal;color:var(--rose);font-size:
 .scratch-secret-only-date .s-day{font-family:var(--f-sans);font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-top:4px}
 #scratchCanvas{position:absolute;inset:0;width:100%;height:100%;cursor:crosshair;touch-action:none;z-index:2;transition:opacity .7s ease}
 #scratchCanvas.revealed{opacity:0;pointer-events:none}
-.scratch-hint{font-family:var(--f-sans);font-size:11px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin:12px auto 0;text-align:center;display:flex;align-items:center;justify-content:center;gap:10px;opacity:.9;transition:opacity .5s ease,transform .5s ease}
-.scratch-hint .sparkle{color:var(--rose);font-size:10px;animation:breathe 2.4s infinite ease-in-out;display:inline-block}
-.scratch-hint.revealed{opacity:0;transform:translateY(4px);pointer-events:none}
+.scratch-hint-overlay{position:absolute;bottom:14px;left:50%;transform:translateX(-50%);z-index:3;pointer-events:none;font-family:var(--f-sans);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#3A2731;font-weight:600;background:rgba(255,253,251,.88);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);padding:5px 14px;border-radius:999px;border:1px solid rgba(169,135,79,.35);box-shadow:0 4px 14px rgba(58,39,49,.16);display:flex;align-items:center;gap:8px;white-space:nowrap;user-select:none;transition:opacity .35s ease,transform .35s ease}
+.scratch-hint-overlay .sparkle{color:var(--rose);font-size:10px;animation:breathe 2.4s infinite ease-in-out;display:inline-block}
+.scratch-hint-overlay.scratched{opacity:0;transform:translateX(-50%) translateY(8px);pointer-events:none}
 
 /* Live Countdown */
 .count{position:relative;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(8px,2vw,20px);max-width:620px;margin:30px auto 0}
@@ -194,6 +194,8 @@ h2 em{font-family:var(--f-script);font-style:normal;color:var(--rose);font-size:
    PAGE 4: MOMENTS (US, SO FAR) - CENTRAL TIMELINE WITH BC MEDALLIONS
    ========================================================================== */
 #moments{background:var(--paper);position:relative;overflow:hidden}
+.moments-verse{margin:12px auto 0;font-style:italic;color:var(--ink-soft);text-align:center}
+.moments-verse cite{display:block;margin-top:6px;font-family:var(--f-sans);font-style:normal;font-size:11px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold);text-align:center}
 .moments-container{position:relative;max-width:980px;margin:50px auto 0;padding-bottom:30px}
 
 /* Central vertical guideline & scrolling trail (PDF Page 4) */
@@ -354,13 +356,16 @@ footer .love-names{font-family:var(--f-display);font-style:normal;font-size:clam
   .invite-scroll-prompt svg{width:13px;height:13px}
   @keyframes promptBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(4px)}}
 
-  .moments-spine{left:20px;transform:translateX(-50%)}
-  .moments-row{grid-template-columns:40px minmax(0,1fr);gap:14px}
-  .moments-logo{grid-column:1;width:38px;height:38px}
-  .moments-logo-img{width:22px;height:22px}
-  .photo-card.on-left,.photo-card.on-right{grid-column:2;justify-self:stretch;width:100%}
-  .js .moments-row .photo-card.on-left,
-  .js .moments-row .photo-card.on-right{transform:translateX(30px) translateY(14px) scale(.96) rotate(0deg)}
+  .moments-container{margin-top:36px}
+  .moments-spine{left:50%;transform:translateX(-50%)}
+  .moments-row{grid-template-columns:1fr 38px 1fr;gap:10px;margin-bottom:28px}
+  .moments-logo{grid-column:2;width:34px;height:34px}
+  .moments-logo-img{width:19px;height:19px}
+  .photo-card{padding:6px;border-radius:12px}
+  .photo-card.on-left{grid-column:1;justify-self:end;width:100%}
+  .photo-card.on-right{grid-column:3;justify-self:start;width:100%}
+  .js .moments-row .photo-card.on-left{transform:translateX(-24px) translateY(10px) rotate(-1.5deg) scale(.96)}
+  .js .moments-row .photo-card.on-right{transform:translateX(24px) translateY(10px) rotate(1.5deg) scale(.96)}
   .js .moments-row.in .photo-card.on-left,
   .js .moments-row.in .photo-card.on-right{transform:none}
   .vine{left:21px;top:44px}
@@ -371,6 +376,11 @@ footer .love-names{font-family:var(--f-display);font-style:normal;font-size:clam
 }
 
 @media (max-width:480px){
+  .moments-row{grid-template-columns:1fr 32px 1fr;gap:8px;margin-bottom:24px}
+  .moments-logo{width:30px;height:30px}
+  .moments-logo-img{width:17px;height:17px}
+  .photo-card{padding:5px;border-radius:10px}
+  .scratch-hint-overlay{font-size:9.5px;letter-spacing:.15em;padding:4px 10px;bottom:10px}
   .part{grid-template-columns:1fr;gap:2px}
   .part-time{padding-top:0}
   .vignettes-3{gap:8px}

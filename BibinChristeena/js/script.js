@@ -247,7 +247,15 @@
       return { x: cx - rect.left, y: cy - rect.top };
     }
 
+    function hideHint() {
+      const hint = $("#scratchHint");
+      if (hint && !hint.classList.contains("scratched")) {
+        hint.classList.add("scratched");
+      }
+    }
+
     function scratch(x, y) {
+      hideHint();
       sCtx.globalCompositeOperation = "destination-out";
       sCtx.beginPath();
       sCtx.arc(x, y, 26, 0, Math.PI * 2);
@@ -272,15 +280,14 @@
       if (isRevealed) return;
       isRevealed = true;
       scratchCanvas.classList.add("revealed");
-      const hint = $("#scratchHint");
-      if (hint) hint.classList.add("revealed");
+      hideHint();
       startPetals(true);
     }
 
-    scratchCanvas.addEventListener("mousedown", e => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); });
+    scratchCanvas.addEventListener("mousedown", e => { isDrawing = true; hideHint(); const p = getPos(e); scratch(p.x, p.y); });
     addEventListener("mouseup", () => { if (isDrawing) { isDrawing = false; checkPercent(); } });
     scratchCanvas.addEventListener("mousemove", e => { if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } });
-    scratchCanvas.addEventListener("touchstart", e => { isDrawing = true; const p = getPos(e); scratch(p.x, p.y); }, { passive: true });
+    scratchCanvas.addEventListener("touchstart", e => { isDrawing = true; hideHint(); const p = getPos(e); scratch(p.x, p.y); }, { passive: true });
     addEventListener("touchend", () => { if (isDrawing) { isDrawing = false; checkPercent(); } });
     scratchCanvas.addEventListener("touchmove", e => { if (isDrawing) { const p = getPos(e); scratch(p.x, p.y); } }, { passive: true });
   }

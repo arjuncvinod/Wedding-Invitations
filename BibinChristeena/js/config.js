@@ -33,14 +33,9 @@ const CONFIG = {
         {
           time: "10:15 am",
           what: "Meet & Greet",
-          where: "Church Grounds, Ebenezer Marthoma Church premises, Othera",
-          map: "https://maps.app.goo.gl/BDc7FmCFvpCj5zTm6"
+          where: "Ebenezer Marthoma Church, Othera P.O, Thiruvalla"
         }
-      ],
-      cal: {
-        start: "2027-01-06T10:15:00+05:30",
-        end: "2027-01-06T10:30:00+05:30"
-      }
+      ]
     },
     {
       id: "ceremony",
@@ -89,14 +84,9 @@ const CONFIG = {
         {
           time: "3:00 pm",
           what: "Final Toast",
-          where: "Loyal Convention Centre, Kumbanad",
-          map: "https://maps.app.goo.gl/WBtSgTKFupCVxvTd9"
+          where: "Loyal Convention Centre, Kumbanad"
         }
-      ],
-      cal: {
-        start: "2027-01-06T15:00:00+05:30",
-        end: "2027-01-06T15:30:00+05:30"
-      }
+      ]
     }
   ],
 
