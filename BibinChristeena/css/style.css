@@ -127,7 +127,10 @@ h2 em{font-family:var(--f-script);font-style:normal;color:var(--rose);font-size:
 .invite-person{font-family:var(--f-display);font-size:clamp(48px,9.5vw,78px);color:var(--rose);margin-block:14px 4px;line-height:1}
 .invite-parents{font-style:italic;color:var(--ink-soft);font-size:clamp(15px,1.8vw,19px);margin:0}
 .invite-with{font-family:var(--f-script);font-size:clamp(32px,5.5vw,46px);color:var(--gold);margin-block:10px;line-height:1}
-.invite-verse{margin-top:36px!important;padding-top:24px;border-top:1px solid rgba(169,135,79,.28);font-style:italic;color:var(--ink-soft);font-size:clamp(16px,1.8vw,20px);max-width:480px;margin-inline:auto}
+.invite-hero{margin:18px auto 14px;text-align:center;position:relative;z-index:2}
+.invite-hero-img{width:clamp(140px,20vw,220px);max-height:280px;height:auto;object-fit:contain;display:block;margin:0 auto;filter:drop-shadow(0 10px 24px rgba(58,39,49,.14));transition:transform .4s var(--ease)}
+.invite-hero-img:hover{transform:scale(1.03)}
+.invite-verse{margin-top:14px!important;padding-top:0;border-top:none;font-style:italic;color:var(--ink-soft);font-size:clamp(15px,1.8vw,19px);max-width:480px;margin-inline:auto}
 .invite-verse cite{display:block;font-family:var(--f-sans);font-style:normal;font-size:11px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-top:8px}
 .invite-scroll-prompt{display:none}
 
@@ -350,7 +353,9 @@ footer .love-names{font-family:var(--f-display);font-style:normal;font-size:clam
   .invite-person{font-size:clamp(44px,12.5vw,62px);margin-block:6px 2px;line-height:1}
   .invite-parents{font-size:clamp(12.5px,3.4vw,15px);line-height:1.35}
   .invite-with{font-size:clamp(26px,6vw,34px);margin-block:2px}
-  .invite-verse{margin-top:18px!important;padding-top:12px;font-size:clamp(13px,3.5vw,15.5px);line-height:1.45}
+  .invite-hero{margin:8px auto}
+  .invite-hero-img{width:clamp(115px,30vw,155px);max-height:185px}
+  .invite-verse{margin-top:8px!important;padding-top:0;border-top:none;font-size:clamp(12.5px,3.3vw,14.5px);line-height:1.4}
   .invite-verse cite{font-size:10px;letter-spacing:.25em;margin-top:4px}
   .invite-scroll-prompt{display:inline-flex;flex-direction:column;align-items:center;gap:3px;color:var(--gold);font-family:var(--f-sans);font-size:9.5px;letter-spacing:.26em;text-transform:uppercase;opacity:.85;animation:promptBounce 2.2s ease-in-out infinite;padding-bottom:2px;z-index:2}
   .invite-scroll-prompt svg{width:13px;height:13px}
@@ -376,6 +381,8 @@ footer .love-names{font-family:var(--f-display);font-style:normal;font-size:clam
 }
 
 @media (max-width:480px){
+  .invite-hero{margin:6px auto}
+  .invite-hero-img{width:clamp(100px,28vw,135px);max-height:160px}
   .moments-row{grid-template-columns:1fr 32px 1fr;gap:8px;margin-bottom:24px}
   .moments-logo{width:30px;height:30px}
   .moments-logo-img{width:17px;height:17px}
